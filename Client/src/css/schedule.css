@@ -1,0 +1,71 @@
+.container {
+  margin: 30px 5% 30px 5%;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+}
+.dayContainer, .eventsBackgroundContainer, .weekDay {
+  min-height: 600px;
+  height: calc(100vh - 60px);
+  position: relative;
+}
+.eventsBackground {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.eventsBackgroundHour {
+  height: 7.15%;
+  box-sizing: border-box;
+}
+.eventsContainer {
+  border-radius: 5px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+.eventsBackgroundHour {
+  border-bottom: 1px solid #efefef;
+}
+.eventsBackgroundHour:last-child {
+  border: 0;
+}
+.eventContainer {
+  position: absolute;
+}
+.eventPadding, .event {
+  box-sizing: border-box;
+  height: 100%;
+}
+.eventPadding {
+  padding-left: 1px;
+}
+.event {
+  margin-top: 1px;
+  background: white;
+  padding: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+  text-align: center;
+}
+.eventTitle {
+  letter-spacing: 2px;
+  color: white;
+  line-height: 120%;
+}
+.eventLocation {
+  letter-spacing: 1px;
+  color: white;
+  line-height: 120%;
+}
+.weekDay {
+  width: 20%;
+  float: left;
+  border-right: 1px dotted #efefef;
+  padding-right: 1px;
+}
+.weekDay:last-child {
+  border: 0;
+}
