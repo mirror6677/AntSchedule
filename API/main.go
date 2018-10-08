@@ -50,7 +50,7 @@ type CourseLookup struct {
 
 // CourseLookupURL that requires lookopt and param1 (and param2) to construct full URL for courses lookup
 func CourseLookupURL(l CourseLookup) string {
-	root := "https://www.bannerssb.bucknell.edu/ERPPRD/hwzkschd.P_Bucknell_SchedDisplay?openopt=ALL&term=201901&"
+	root := "https://www.bannerssb.bucknell.edu/ERPPRD/hwzkschd.P_Bucknell_SchedDisplay?openopt=ALL&term=201905&"
 	url := root + "lookopt=" + l.LookOpt + "&param1=" + l.Param1
 	if len(l.Param2) != 0 {
 		url = url + "&param2=" + l.Param2
@@ -60,14 +60,14 @@ func CourseLookupURL(l CourseLookup) string {
 
 // CourseDescURL that requires subj (department) and numb (course number) to construct full URL for course description
 func CourseDescURL(subj string, numb string) string {
-	root := "https://www.bannerssb.bucknell.edu/ERPPRD/bwckctlg.p_disp_course_detail?cat_term_in=201901&"
+	root := "https://www.bannerssb.bucknell.edu/ERPPRD/bwckctlg.p_disp_course_detail?cat_term_in=201905&"
 	url := root + "subj_code_in=" + subj + "&crse_numb_in=" + numb
 	return url
 }
 
 // FullTextSearchURL that requires department and a query string for course title to constuct full url
 func FullTextSearchURL(l CourseLookup) string {
-	root := "https://www.bannerssb.bucknell.edu/ERPPRD/bwckctlg.p_display_courses/?term_in=201901&call_proc_in=bwckctlg.p_disp_dyn_ctlg&sel_subj=dummy&sel_levl=dummy&sel_schd=dummy&sel_coll=dummy&sel_divs=dummy&sel_dept=dummy&sel_attr=dummy&"
+	root := "https://www.bannerssb.bucknell.edu/ERPPRD/bwckctlg.p_display_courses/?term_in=201905&call_proc_in=bwckctlg.p_disp_dyn_ctlg&sel_subj=dummy&sel_levl=dummy&sel_schd=dummy&sel_coll=dummy&sel_divs=dummy&sel_dept=dummy&sel_attr=dummy&"
 	url := root + "sel_subj=" + l.Param1 + "&sel_title=" + strings.Title(l.Param2)
 	return url
 }
@@ -311,7 +311,10 @@ func fetchCourseDetail(subj string, numb string, title string) []CourseDetail {
 						if cc := strings.Split(c, " "); len(cc) == 2 {
 							// recursively fetch all linked courses
 							// TODO: fetch courses using go routine
-							linked = append(linked, fetchCourseDetail(cc[0], cc[1], ""))
+							lc := fetchCourseDetail(cc[0], cc[1], "")
+							if len(lc) > 0 {
+								linked = append(linked, fetchCourseDetail(cc[0], cc[1], ""))
+							}
 						}
 					}
 					i++
@@ -527,6 +530,11 @@ func GetCourse(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(courses)
 }
 
+// Welcome prints a welcome message and simple instructions for using this API
+func Welcome(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Welcome to AntSchedule API! \nPlease use /searchCourses/{query} for course autocomplete and courseDetail/{dept}/{crseNum}/[{title}] for fetching course details.")
+}
+
 func main() {
 	port := os.Getenv("PORT")
 
@@ -538,6 +546,7 @@ func main() {
 
 	router := mux.NewRouter()
 	handler := cors.Default().Handler(router)
+	router.HandleFunc("/", Welcome).Methods("GET")
 	router.HandleFunc("/searchCourses/{query}", SearchCourses).Methods("GET")
 	router.HandleFunc("/courseDetail/{dept}/{crseNum}", GetCourse).Methods("GET")
 	router.HandleFunc("/courseDetail/{dept}/{crseNum}/{title}", GetCourse).Methods("GET")

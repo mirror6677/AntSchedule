@@ -193,6 +193,7 @@ class SelectedCourseList extends Component {
 
   render() {
     const { courses, selected } = this.state
+    console.log(courses)
     return (
       Object.keys(courses).length ? <div className={styles.section}>
         <div className={styles.collapseHeader}>

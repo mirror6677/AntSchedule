@@ -19,7 +19,7 @@ class MajorCourseList extends Component {
 
   componentWillMount() {
     if (this.major && this.classYear) {
-      let courses = majorRequirements[this.major][parseInt(this.classYear, 10)][0]
+      let courses = majorRequirements[this.major][parseInt(this.classYear, 10)][1]
       loadMajorCourses(courses, this.loadCoursesCompleted)
     }
   }
