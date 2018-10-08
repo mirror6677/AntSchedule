@@ -6,7 +6,7 @@ Course scheduling web application for Bucknell University
 * Fast course lookup by department, course number, title, and CCC requirement
 * Engineering major requirements encoded to prepopulate courses based on major and class year
 * Algorithm to generate optimal course schedule with minimum overlaping time
-* [API endpoint](http://antschedule-api.herokuapp.com) to support realtime course search autocomplete and course data retrieval
+* [API endpoint](http://api.antschedule.io) to support realtime course search autocomplete and course data retrieval
 
 ## Demo
 ![](https://github.com/mirror6677/AntSchedule/blob/master/demo.gif)
