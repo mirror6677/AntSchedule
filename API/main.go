@@ -50,7 +50,7 @@ type CourseLookup struct {
 
 // CourseLookupURL that requires lookopt and param1 (and param2) to construct full URL for courses lookup
 func CourseLookupURL(l CourseLookup) string {
-	root := "https://www.bannerssb.bucknell.edu/ERPPRD/hwzkschd.P_Bucknell_SchedDisplay?openopt=ALL&term=201905&"
+	root := "https://ssb-prod.ec.bucknell.edu/PROD/hwzkschd.P_Bucknell_SchedDisplay?openopt=ALL&term=201905&"
 	url := root + "lookopt=" + l.LookOpt + "&param1=" + l.Param1
 	if len(l.Param2) != 0 {
 		url = url + "&param2=" + l.Param2
